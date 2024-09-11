@@ -19,63 +19,69 @@
   <!-- Camera entity for AR.js -->
   <a-entity camera></a-entity>
 
-  <!-- Model with rotation -->
+  <!-- Load the glTF Model with Rotation -->
   <a-entity
-    id="rotatingModel"
+    id="model"
     gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
     scale="0.1 0.1 0.1"
     position="0 0 -2"
-    rotation="0 180 0"
-    gesture-rotate>
+    rotation="0 180 0">
   </a-entity>
 
 </a-scene>
 
 <!-- Add the rotation interaction script -->
 <script>
-  AFRAME.registerComponent('gesture-rotate', {
-    schema: {speed: {default: 1}}, // Adjust the speed of rotation
-    init: function () {
-      this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
-      this.el.addEventListener('touchstart', this.onTouchStart.bind(this));
-      this.isRotating = false;
-      this.rotation = this.el.getAttribute('rotation');
-    },
-    onMouseDown: function (evt) {
-      this.isRotating = true;
-      this.startX = evt.clientX;
-      window.addEventListener('mousemove', this.onMouseMove.bind(this));
-      window.addEventListener('mouseup', this.onMouseUp.bind(this));
-    },
-    onMouseMove: function (evt) {
-      if (!this.isRotating) return;
-      let deltaX = evt.clientX - this.startX;
-      this.startX = evt.clientX;
-      this.rotation.y += deltaX * this.data.speed;
-      this.el.setAttribute('rotation', this.rotation);
-    },
-    onMouseUp: function () {
-      this.isRotating = false;
-      window.removeEventListener('mousemove', this.onMouseMove.bind(this));
-      window.removeEventListener('mouseup', this.onMouseUp.bind(this));
-    },
-    onTouchStart: function (evt) {
-      this.isRotating = true;
-      this.startX = evt.touches[0].clientX;
-      window.addEventListener('touchmove', this.onTouchMove.bind(this));
-      window.addEventListener('touchend', this.onTouchEnd.bind(this));
-    },
-    onTouchMove: function (evt) {
-      if (!this.isRotating) return;
-      let deltaX = evt.touches[0].clientX - this.startX;
-      this.startX = evt.touches[0].clientX;
-      this.rotation.y += deltaX * this.data.speed;
-      this.el.setAttribute('rotation', this.rotation);
-    },
-    onTouchEnd: function () {
-      this.isRotating = false;
-      window.removeEventListener('touchmove', this.onTouchMove.bind(this));
-      window.removeEventListener('touchend', this.onTouchEnd.bind(this));
+  // Variable to track if the user is dragging
+  let isDragging = false;
+  let previousMousePosition = { x: 0, y: 0 };
+
+  // Reference to the model
+  const model = document.querySelector('#model');
+
+  // Mouse down event to start dragging
+  document.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    previousMousePosition.x = e.clientX;
+  });
+
+  // Mouse up event to stop dragging
+  document.addEventListener('mouseup', function () {
+    isDragging = false;
+  });
+
+  // Mouse move event to rotate the model
+  document.addEventListener('mousemove', function (e) {
+    if (isDragging) {
+      let deltaX = e.clientX - previousMousePosition.x;
+      previousMousePosition.x = e.clientX;
+
+      let rotation = model.getAttribute('rotation');
+      rotation.y += deltaX * 0.5; // Adjust rotation sensitivity
+      model.setAttribute('rotation', rotation);
+    }
+  });
+
+  // Touch start event for mobile devices
+  document.addEventListener('touchstart', function (e) {
+    isDragging = true;
+    previousMousePosition.x = e.touches[0].clientX;
+  });
+
+  // Touch end event to stop rotation
+  document.addEventListener('touchend', function () {
+    isDragging = false;
+  });
+
+  // Touch move event to rotate the model
+  document.addEventListener('touchmove', function (e) {
+    if (isDragging) {
+      let deltaX = e.touches[0].clientX - previousMousePosition.x;
+      previousMousePosition.x = e.touches[0].clientX;
+
+      let rotation = model.getAttribute('rotation');
+      rotation.y += deltaX * 0.5; // Adjust rotation sensitivity
+      model.setAttribute('rotation', rotation);
     }
   });
 </script>
