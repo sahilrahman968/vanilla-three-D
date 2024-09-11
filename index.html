@@ -19,12 +19,12 @@
   <!-- Camera entity for AR.js -->
   <a-entity camera></a-entity>
 
-  <!-- Load the glTF Model with Rotation -->
+  <!-- Load the glTF Model with Rotation and Centered -->
   <a-entity
     id="model"
     gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
     scale="0.5 0.5 0.5"
-    position="0 0 0"
+    position="0 0 -2" <!-- Move the model back to be at the center of view -->
     rotation="0 180 0">
   </a-entity>
 
