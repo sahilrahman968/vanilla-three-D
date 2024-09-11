@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR glTF Model with Rotation</title>
+  <title>AR glTF Model with Fixed Position</title>
   <!-- Include A-Frame -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <!-- Include AR.js -->
@@ -19,14 +19,20 @@
   <!-- Camera entity for AR.js -->
   <a-entity camera></a-entity>
 
-  <!-- Load the glTF Model with Rotation and Centered -->
-  <a-entity
-    id="model"
-    gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
-    scale="0.5 0.5 0.5"
-    position="0 0 -2" <!-- Move the model back to be at the center of view -->
-    rotation="0 180 0">
-  </a-entity>
+  <!-- Fixed position marker in AR.js -->
+  <a-marker preset="hiro">
+    <!-- Load the glTF Model with Rotation -->
+    <a-entity
+      id="model"
+      gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
+      scale="0.5 0.5 0.5"
+      position="0 0 0"
+      rotation="0 180 0">
+    </a-entity>
+  </a-marker>
+
+  <!-- Include a light for better visibility -->
+  <a-entity light="type: directional; intensity: 0.6" position="1 1 0"></a-entity>
 
 </a-scene>
 
