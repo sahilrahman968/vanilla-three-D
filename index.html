@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR glTF Model with Fixed Position</title>
+  <title>AR QR Code Marker</title>
   <!-- Include A-Frame -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <!-- Include AR.js -->
@@ -14,13 +14,13 @@
 <a-scene
   embedded
   vr-mode-ui="enabled: false"
-  arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: false;">
+  arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: true;">
   
   <!-- Camera entity for AR.js -->
   <a-entity camera></a-entity>
 
-  <!-- Fixed position marker in AR.js -->
-  <a-marker preset="hiro">
+  <!-- QR Code Marker Setup -->
+  <a-marker type="barcode" value="1"> <!-- Use type="barcode" for QR codes -->
     <!-- Load the glTF Model with Rotation -->
     <a-entity
       id="model"
@@ -33,6 +33,11 @@
 
   <!-- Include a light for better visibility -->
   <a-entity light="type: directional; intensity: 0.6" position="1 1 0"></a-entity>
+
+  <!-- Debug UI -->
+  <a-entity id="debug" position="0 2 -2">
+    <a-text value="Scan a QR code to see the model." align="center"></a-text>
+  </a-entity>
 
 </a-scene>
 
