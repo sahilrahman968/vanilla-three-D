@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR glTF Model</title>
+  <title>AR glTF Model with Rotation</title>
   <!-- Include A-Frame -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <!-- Include AR.js -->
@@ -19,15 +19,66 @@
   <!-- Camera entity for AR.js -->
   <a-entity camera></a-entity>
 
-  <!-- Load the glTF Model -->
+  <!-- Model with rotation -->
   <a-entity
+    id="rotatingModel"
     gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
     scale="0.1 0.1 0.1"
     position="0 0 -2"
-    rotation="0 180 0">
+    rotation="0 180 0"
+    gesture-rotate>
   </a-entity>
 
 </a-scene>
+
+<!-- Add the rotation interaction script -->
+<script>
+  AFRAME.registerComponent('gesture-rotate', {
+    schema: {speed: {default: 1}}, // Adjust the speed of rotation
+    init: function () {
+      this.el.addEventListener('mousedown', this.onMouseDown.bind(this));
+      this.el.addEventListener('touchstart', this.onTouchStart.bind(this));
+      this.isRotating = false;
+      this.rotation = this.el.getAttribute('rotation');
+    },
+    onMouseDown: function (evt) {
+      this.isRotating = true;
+      this.startX = evt.clientX;
+      window.addEventListener('mousemove', this.onMouseMove.bind(this));
+      window.addEventListener('mouseup', this.onMouseUp.bind(this));
+    },
+    onMouseMove: function (evt) {
+      if (!this.isRotating) return;
+      let deltaX = evt.clientX - this.startX;
+      this.startX = evt.clientX;
+      this.rotation.y += deltaX * this.data.speed;
+      this.el.setAttribute('rotation', this.rotation);
+    },
+    onMouseUp: function () {
+      this.isRotating = false;
+      window.removeEventListener('mousemove', this.onMouseMove.bind(this));
+      window.removeEventListener('mouseup', this.onMouseUp.bind(this));
+    },
+    onTouchStart: function (evt) {
+      this.isRotating = true;
+      this.startX = evt.touches[0].clientX;
+      window.addEventListener('touchmove', this.onTouchMove.bind(this));
+      window.addEventListener('touchend', this.onTouchEnd.bind(this));
+    },
+    onTouchMove: function (evt) {
+      if (!this.isRotating) return;
+      let deltaX = evt.touches[0].clientX - this.startX;
+      this.startX = evt.touches[0].clientX;
+      this.rotation.y += deltaX * this.data.speed;
+      this.el.setAttribute('rotation', this.rotation);
+    },
+    onTouchEnd: function () {
+      this.isRotating = false;
+      window.removeEventListener('touchmove', this.onTouchMove.bind(this));
+      window.removeEventListener('touchend', this.onTouchEnd.bind(this));
+    }
+  });
+</script>
 
 </body>
 </html>
