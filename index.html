@@ -1,48 +1,30 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR GLTF Model</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.6/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r121/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.121.1/examples/js/loaders/GLTFLoader.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <a-scene embedded arjs>
-        <a-entity id="gltf-model" position="0 0 0" scale="0.1 0.1 0.1"></a-entity>
-        <a-marker preset="hiro">
-            <a-box position="0 0.5 0" material="opacity: 0;"></a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
-    <script src="script.js"></script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR GLTF Model</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.6/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.121.1/examples/js/loaders/GLTFLoader.js"></script>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR glTF Model</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.js"></script>
+  <script src="https://unpkg.com/three@0.126.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
 </head>
-<body>
-    <a-scene embedded arjs>
-        <a-marker preset="hiro">
-            <!-- Load the GLTF model directly using the gltf-model component -->
-            <a-entity gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/CesiumMan/glTF/CesiumMan.gltf)"
-                      scale="0.1 0.1 0.1"
-                      position="0 0 0">
-            </a-entity>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
+<body style="margin: 0; overflow: hidden;">
+
+<a-scene
+  embedded
+  vr-mode-ui="enabled: false"
+  arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: false;">
+  
+  <!-- Markerless AR using WebXR -->
+  <a-entity camera look-controls wasd-controls></a-entity>
+
+  <!-- Load the glTF Model -->
+  <a-entity id="gltf-model" position="0 0 0" scale="0.05 0.05 0.05" rotation="0 0 0"
+            gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/CesiumMan/glTF/CesiumMan.gltf)"></a-entity>
+
+</a-scene>
+
 </body>
 </html>
+
