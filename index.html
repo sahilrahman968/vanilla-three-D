@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR glTF Model with Fixed Position</title>
+  <title>AR glTF Model with Rear Aligned</title>
   <!-- Include A-Frame -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <!-- Include AR.js -->
@@ -26,7 +26,7 @@
       id="model"
       gltf-model="url(https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf)"
       scale="0.5 0.5 0.5"
-      position="0 0 0"
+      position="0 -0.25 -0.5"  <!-- Adjusted position to align rear -->
       rotation="0 180 0">
     </a-entity>
   </a-marker>
